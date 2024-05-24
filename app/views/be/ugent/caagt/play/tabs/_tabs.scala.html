@@ -1,0 +1,30 @@
+@* _tabs.scala.html
+* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* Copyright © 2022-2024 Kris Coolsaet (Universiteit Gent)
+*
+* This software is distributed under the MIT License - see files LICENSE and AUTHORS
+* in the top level project directory.
+*@
+@* Displays a set of tabs and the corresponding contents *@
+@import _root_.be.ugent.caagt.play.util.Tab
+@(css: String, extra: => Html, tabs: Tab*)
+
+<ul class="nav @css" role="tablist">
+    @for(tab <- tabs) {
+        <li class="nav-item" role="presentation">
+            <button class='nav-link @if(tab.isActive)("active")else("")'
+                   data-bs-toggle="tab" data-bs-target="#tab-@tab.getId"
+                   id="@tab.getId" type="button" role="tab">@tab.getTitle</button>
+        </li>
+    }
+    @extra
+</ul>
+
+<div class="tab-content">
+    @for(tab <- tabs) {
+        <div class='tab-pane @if(tab.isActive)("active")else("")' id="tab-@tab.getId" role="tabpanel">
+        @tab.getContent
+        </div>
+    }
+</div>
+
